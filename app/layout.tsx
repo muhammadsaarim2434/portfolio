@@ -3,6 +3,8 @@ import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import SmoothScroll from '@/components/SmoothScroll';
 import Cursor from '@/components/Cursor';
+import ScrollProgress from '@/components/ScrollProgress';
+import Grain from '@/components/Grain';
 import { profile } from '@/lib/data';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
@@ -41,6 +43,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${display.variable}`}>
       <body className="font-sans antialiased">
+        <Grain />
+        <ScrollProgress />
         <Cursor />
         <SmoothScroll>{children}</SmoothScroll>
       </body>

@@ -28,9 +28,19 @@ const config: Config = {
         shimmer: {
           '100%': { transform: 'translateX(100%)' },
         },
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
+        kenburns: {
+          '0%': { transform: 'scale(1) translate(0, 0)' },
+          '100%': { transform: 'scale(1.18) translate(-2%, -2%)' },
+        },
       },
       animation: {
         float: 'float 6s ease-in-out infinite',
+        marquee: 'marquee 26s linear infinite',
+        kenburns: 'kenburns 18s ease-in-out infinite alternate',
       },
     },
   },

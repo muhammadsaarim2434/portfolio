@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { FiArrowDownRight, FiGithub, FiLinkedin } from 'react-icons/fi';
+import MagneticButton from '@/components/MagneticButton';
 import { profile } from '@/lib/data';
 
 const HeroCanvas = dynamic(() => import('@/components/three/HeroCanvas'), {
@@ -67,13 +68,15 @@ export default function Hero() {
             transition={{ delay: 0.85, duration: 0.7 }}
             className="mt-8 flex flex-wrap items-center gap-4"
           >
-            <a
+            <MagneticButton
               href="#work"
-              className="group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-transform hover:scale-105"
+              className="group rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white"
             >
-              View Work
-              <FiArrowDownRight className="transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
-            </a>
+              <span className="inline-flex items-center gap-2">
+                View Work
+                <FiArrowDownRight />
+              </span>
+            </MagneticButton>
             <a
               href="#contact"
               className="rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/5"

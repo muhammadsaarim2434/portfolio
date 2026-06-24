@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Reveal from '@/components/Reveal';
+import AnimatedHeading from '@/components/AnimatedHeading';
 import { skills } from '@/lib/data';
 
 export default function Skills() {
@@ -13,11 +14,10 @@ export default function Skills() {
             Tech Stack
           </p>
         </Reveal>
-        <Reveal delay={0.05}>
-          <h2 className="max-w-2xl font-display text-3xl font-bold md:text-4xl">
-            Tools &amp; technologies I use to ship
-          </h2>
-        </Reveal>
+        <AnimatedHeading
+          text="Tools & technologies I use to ship"
+          className="max-w-2xl font-display text-3xl font-bold md:text-4xl"
+        />
 
         <div className="mt-10 flex flex-wrap gap-3">
           {skills.map((skill, idx) => (

@@ -1,130 +1,135 @@
 'use client';
 
 import { useRef } from 'react';
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
-} from 'framer-motion';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import { FiArrowUpRight, FiGithub } from 'react-icons/fi';
-import Reveal from '@/components/Reveal';
 import { projects, type Project } from '@/lib/data';
 
-function ProjectCard({ project, index }: { project: Project; index: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const rotateX = useSpring(useTransform(my, [-0.5, 0.5], [8, -8]), {
-    stiffness: 150,
-    damping: 15,
-  });
-  const rotateY = useSpring(useTransform(mx, [-0.5, 0.5], [-8, 8]), {
-    stiffness: 150,
-    damping: 15,
-  });
+const accents = [
+  'from-[#5b6cff]/30',
+  'from-[#8a5bff]/30',
+  'from-[#00b4d8]/30',
+  'from-[#ff6b6b]/30',
+  'from-[#ffb703]/30',
+];
 
-  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return;
-    mx.set((e.clientX - rect.left) / rect.width - 0.5);
-    my.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
-
-  const handleLeave = () => {
-    mx.set(0);
-    my.set(0);
-  };
-
+function Card({ project, index }: { project: Project; index: number }) {
   return (
-    <Reveal delay={index * 0.07}>
-      <motion.div
-        ref={ref}
-        onMouseMove={handleMove}
-        onMouseLeave={handleLeave}
-        style={{ rotateX, rotateY, transformPerspective: 900 }}
-        className="group relative h-full overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.01] p-7"
-      >
-        <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-accent/20 blur-3xl transition-opacity duration-500 group-hover:opacity-100 md:opacity-0" />
+    <article
+      className="panel relative flex h-[62vh] w-[82vw] shrink-0 flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-surface p-8 md:w-[46vw] md:p-10"
+    >
+      <div
+        className={`pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-gradient-to-br ${accents[index % accents.length]} to-transparent blur-3xl`}
+      />
 
-        <div className="flex items-start justify-between">
-          <span className="font-display text-4xl font-bold text-white/10">
-            0{index + 1}
-          </span>
-          <div className="flex gap-2">
-            {project.github ? (
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="GitHub repo"
-                className="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-muted transition-colors hover:border-accent hover:text-white"
-              >
-                <FiGithub size={16} />
-              </a>
-            ) : null}
-            {project.live ? (
-              <a
-                href={project.live}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Live site"
-                className="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-muted transition-colors hover:border-accent hover:text-white"
-              >
-                <FiArrowUpRight size={16} />
-              </a>
-            ) : null}
-          </div>
+      <div className="flex items-start justify-between">
+        <span className="font-display text-6xl font-bold text-white/10">
+          0{index + 1}
+        </span>
+        <div className="flex gap-2">
+          {project.github ? (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="GitHub"
+              className="grid h-10 w-10 place-items-center rounded-full border border-white/10 text-muted transition-colors hover:border-accent hover:text-white"
+            >
+              <FiGithub size={16} />
+            </a>
+          ) : null}
+          {project.live ? (
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Live"
+              className="grid h-10 w-10 place-items-center rounded-full border border-white/10 text-muted transition-colors hover:border-accent hover:text-white"
+            >
+              <FiArrowUpRight size={16} />
+            </a>
+          ) : null}
         </div>
+      </div>
 
-        <h3 className="mt-6 font-display text-2xl font-bold">{project.title}</h3>
-        <p className="mt-3 text-sm leading-relaxed text-muted">
+      <div>
+        <h3 className="font-display text-3xl font-bold md:text-5xl">
+          {project.title}
+        </h3>
+        <p className="mt-4 max-w-md text-sm leading-relaxed text-muted md:text-base">
           {project.description}
         </p>
-
-        <div className="mt-5 flex flex-wrap gap-2">
+        <div className="mt-6 flex flex-wrap gap-2">
           {project.tech.map((t) => (
             <span
               key={t}
-              className="rounded-full bg-white/5 px-3 py-1 text-xs text-muted"
+              className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-muted"
             >
               {t}
             </span>
           ))}
         </div>
-      </motion.div>
-    </Reveal>
+      </div>
+    </article>
   );
 }
 
 export default function Projects() {
-  return (
-    <section id="work" className="section-pad relative">
-      <div className="mx-auto max-w-7xl">
-        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
-          <div>
-            <Reveal>
-              <p className="mb-3 font-display text-sm uppercase tracking-[0.3em] text-accent">
-                Selected Work
-              </p>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <h2 className="font-display text-3xl font-bold md:text-4xl">
-                Projects I&apos;ve built
-              </h2>
-            </Reveal>
-          </div>
-          <Reveal delay={0.1}>
-            <p className="max-w-xs text-sm text-muted">
-              A selection of products and websites crafted with the MERN stack and
-              modern front-end tooling.
-            </p>
-          </Reveal>
-        </div>
+  const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
 
-        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+  useGSAP(
+    () => {
+      gsap.registerPlugin(ScrollTrigger);
+      const mm = gsap.matchMedia();
+
+      mm.add('(min-width: 768px)', () => {
+        const track = trackRef.current;
+        const section = sectionRef.current;
+        if (!track || !section) return;
+
+        const getAmount = () => track.scrollWidth - window.innerWidth + 96;
+
+        gsap.to(track, {
+          x: () => -getAmount(),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: () => `+=${getAmount()}`,
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        });
+      });
+
+      return () => mm.revert();
+    },
+    { scope: sectionRef }
+  );
+
+  return (
+    <section id="work" ref={sectionRef} className="relative overflow-hidden py-20 md:py-0">
+      <div className="px-6 pt-10 md:absolute md:left-12 md:top-10 md:z-10 md:pt-0">
+        <p className="mb-2 font-display text-sm uppercase tracking-[0.3em] text-accent">
+          Selected Work
+        </p>
+        <h2 className="font-display text-3xl font-bold md:text-4xl">
+          Projects I&apos;ve built
+        </h2>
+      </div>
+
+      <div className="flex md:h-screen md:items-center">
+        <div
+          ref={trackRef}
+          className="flex w-full flex-col gap-6 px-6 md:w-auto md:flex-row md:gap-8 md:px-12 md:pt-24"
+        >
           {projects.map((p, i) => (
-            <ProjectCard key={p.title} project={p} index={i} />
+            <Card key={p.title} project={p} index={i} />
           ))}
         </div>
       </div>
