@@ -35,10 +35,6 @@ const groups: { title: string; items: string[] }[] = [
 export default function Skills() {
   return (
     <section id="skills" className="section-pad relative overflow-hidden">
-      <span className="pointer-events-none absolute -right-4 top-6 select-none font-display text-[22vw] font-extrabold leading-none text-white/[0.03] md:text-[14vw]">
-        STACK
-      </span>
-
       <div className="relative mx-auto max-w-7xl">
         <Reveal>
           <p className="mb-3 font-display text-sm uppercase tracking-[0.3em] text-accent">

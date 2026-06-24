@@ -8,10 +8,6 @@ import { experiences, education, certificates } from '@/lib/data';
 export default function Experience() {
   return (
     <section id="experience" className="section-pad relative overflow-hidden">
-      <span className="pointer-events-none absolute -left-4 top-6 select-none font-display text-[22vw] font-extrabold leading-none text-white/[0.03] md:text-[14vw]">
-        CAREER
-      </span>
-
       <div className="relative mx-auto max-w-7xl">
         <Reveal>
           <p className="mb-3 font-display text-sm uppercase tracking-[0.3em] text-accent">
