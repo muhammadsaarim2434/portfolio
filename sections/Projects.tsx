@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { FiArrowUpRight, FiGithub } from 'react-icons/fi';
 import { projects, type Project } from '@/lib/data';
+import { projectImages } from '@/lib/media';
 
 const accents = [
   'from-[#5b6cff]/30',
@@ -23,6 +24,18 @@ function Card({ project, index }: { project: Project; index: number }) {
       <div
         className={`pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-gradient-to-br ${accents[index % accents.length]} to-transparent blur-3xl`}
       />
+
+      <div className="relative z-10">
+      {/* placeholder project image */}
+      <div className="relative mb-6 h-40 w-full shrink-0 overflow-hidden rounded-2xl md:h-52">
+        <img
+          src={projectImages[index % projectImages.length]}
+          alt={project.title}
+          loading="lazy"
+          className="h-full w-full scale-105 object-cover grayscale transition-all duration-700 hover:scale-110 hover:grayscale-0"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/20 to-transparent" />
+      </div>
 
       <div className="flex items-start justify-between">
         <span className="font-display text-6xl font-bold text-white/10">
@@ -53,8 +66,9 @@ function Card({ project, index }: { project: Project; index: number }) {
           ) : null}
         </div>
       </div>
+      </div>
 
-      <div>
+      <div className="relative z-10">
         <h3 className="font-display text-3xl font-bold md:text-5xl">
           {project.title}
         </h3>

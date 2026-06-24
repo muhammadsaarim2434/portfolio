@@ -11,7 +11,6 @@ export default function Cursor() {
     const finePointer = window.matchMedia('(pointer: fine)').matches;
     if (!finePointer) return;
     setEnabled(true);
-    document.documentElement.classList.add('custom-cursor-active');
 
     const dot = dotRef.current!;
     const ring = ringRef.current!;
@@ -51,7 +50,6 @@ export default function Cursor() {
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('mouseover', onOver);
       cancelAnimationFrame(rafId);
-      document.documentElement.classList.remove('custom-cursor-active');
     };
   }, []);
 

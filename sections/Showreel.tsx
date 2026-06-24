@@ -4,15 +4,14 @@ import { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
-import { profile } from '@/lib/data';
+import { videos } from '@/lib/media';
 
 /**
- * Cinematic full-screen section.
- * Currently uses your photo with a Ken Burns zoom + scroll parallax.
- * To drop in an AI-generated video later, set VIDEO_SRC to e.g. '/videos/showreel.mp4'
- * (place the file in public/videos/) — it will replace the photo automatically.
+ * Cinematic full-screen section with a parallax + zoom video background.
+ * To use your own AI-generated clip later, replace videos.showreel in lib/media.ts
+ * with e.g. '/videos/showreel.mp4' (place the file in public/videos/).
  */
-const VIDEO_SRC = '';
+const VIDEO_SRC = videos.showreel;
 
 export default function Showreel() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -58,23 +57,16 @@ export default function Showreel() {
     >
       {/* Media layer */}
       <div ref={mediaRef} className="absolute inset-0 -z-10 will-change-transform">
-        {VIDEO_SRC ? (
-          <video
-            className="h-full w-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster={profile.photo}
-          >
-            <source src={VIDEO_SRC} type="video/mp4" />
-          </video>
-        ) : (
-          <div
-            className="h-full w-full animate-kenburns bg-cover bg-center"
-            style={{ backgroundImage: `url(${profile.photo})` }}
-          />
-        )}
+        <video
+          className="h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+        >
+          <source src={VIDEO_SRC} type="video/mp4" />
+        </video>
         {/* duotone / darkening overlays for a cinematic look */}
         <div className="absolute inset-0 bg-gradient-to-b from-bg/70 via-bg/40 to-bg/90" />
         <div className="absolute inset-0 bg-accent/20 mix-blend-color" />

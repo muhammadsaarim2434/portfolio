@@ -62,12 +62,7 @@ body {
   }
 }
 
-/* Hide native cursor only on devices with a fine pointer (desktop) */
-@media (pointer: fine) {
-  .custom-cursor-active * {
-    cursor: none !important;
-  }
-}
+/* Native cursor stays visible. The custom ring is only a subtle accent. */
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {

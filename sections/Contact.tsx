@@ -3,7 +3,9 @@
 import { useState } from 'react';
 import { FiMail, FiMapPin, FiPhone, FiSend } from 'react-icons/fi';
 import Reveal from '@/components/Reveal';
+import VideoBackground from '@/components/VideoBackground';
 import { profile } from '@/lib/data';
+import { videos } from '@/lib/media';
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
@@ -29,9 +31,10 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="section-pad relative">
+    <section id="contact" className="section-pad relative overflow-hidden">
+      <VideoBackground src={videos.contact} dark={0.86} />
       <div className="pointer-events-none absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-accent/20 blur-[140px]" />
-      <div className="mx-auto max-w-5xl">
+      <div className="relative z-10 mx-auto max-w-5xl">
         <Reveal>
           <p className="mb-3 text-center font-display text-sm uppercase tracking-[0.3em] text-accent">
             Contact
